@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">   
+    <checkout_cart_index>
+        <reference name="head">
+            <action method="addItem" ifconfig="masterpass/config/enabled">
+                <type>skin_css</type>
+                <name>css/masterpass/masterpassclient.css</name>
+            </action> 
+        </reference>
+        <reference name="checkout.cart.top_methods">
+            <block type="masterpass/button" name="masterpass.checkout.button.top"
+                   after="-" template="masterpass/cart/button.phtml">
+            </block>
+        </reference>
+
+        <reference name="checkout.cart.methods">
+            <block type="masterpass/button" name="masterpass.checkout.button"
+                   after="checkout.cart.methods.onepage" template="masterpass/cart/buttonbottom.phtml">
+            </block>
+        </reference>
+
+        <update handle="SHORTCUT_popup" />
+    </checkout_cart_index>
+    <!-- customer account block -->
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <block type="masterpass/customer_link" name="masterpass_customer_link">
+                <action method="addProfileLink"></action>
+            </block>
+        </reference>
+    </customer_account>
+	
+    <masterpass_masterpasspairing_index>
+        <label>Pair With My MasterPass Wallet</label>
+        <update handle="customer_account" />
+		
+        <!-- referencing content rather than my.account for compatibility back to 1.4. -->
+        <reference name="content">
+            <!-- The active payment method can inject itself into this wrapper with handle customer_paymentinfo_index_{method}. -->
+            <block type="masterpass/customer_wrapper" name="masterpass_customer_wrapper" template="masterpass/customer/wrapper.phtml" />
+			
+            <block type="customer/account_dashboard" name="customer.account.link.back" template="customer/account/link/back.phtml" />
+        </reference>
+    </masterpass_masterpasspairing_index>
+    <masterpass_masterpasspairing_precheckout>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action> 
+        </reference>
+        <reference name="head">
+            <action method="addItem" ifconfig="masterpass/config/enabled">
+                <type>skin_css</type>
+                <name>css/masterpass/masterpassclient.css</name>
+            </action>            
+        </reference>
+        <reference name="content">        
+            <block type="masterpass/checkout_precheckout" name="precheckout.masterpass" template="masterpass/precheckout/precheckout.phtml">
+                <block type="masterpass/checkout_shipping" name="shipping-form" as="shippingform" template="masterpass/precheckout/shipping.phtml"/>
+                <block type="checkout/onepage_shipping_method_available" name="choose-shipping-method" as="mpshippingmethod" template="masterpass/precheckout/shipping_method.phtml"/>
+                <block type="checkout/onepage_shipping_method_additional" name="checkout.onepage.shipping_method.additional" as="additional" template="checkout/onepage/shipping_method/additional.phtml"/>
+                <block type="masterpass/checkout_review_details" name="masterpass.checkout.review.details" as="details" template="masterpass/review/details.phtml">
+                    <action method="addItemRender">
+                        <type>default</type>
+                        <block>checkout/cart_item_renderer</block>
+                        <template>checkout/onepage/review/item.phtml</template>
+                    </action>
+                    <action method="addItemRender">
+                        <type>grouped</type>
+                        <block>checkout/cart_item_renderer_grouped</block>
+                        <template>checkout/onepage/review/item.phtml</template>
+                    </action>
+                    <action method="addItemRender">
+                        <type>configurable</type>
+                        <block>checkout/cart_item_renderer_configurable</block>
+                        <template>checkout/onepage/review/item.phtml</template>
+                    </action>
+                    <block type="checkout/cart_totals" name="masterpass.checkout.review.details.totals" as="totals" template="checkout/onepage/review/totals.phtml"/>
+                </block>
+            </block>           
+        </reference>
+    </masterpass_masterpasspairing_precheckout>
+    <checkout_onepage_index>
+        <reference name="content">
+            <block type="masterpass/button" name="masterpass.pairing"
+                   before="-" template="masterpass/precheckout/pairWallet.phtml">
+            </block>
+        </reference>
+    </checkout_onepage_index>
+    <checkout_onepage_index>
+        <reference name="checkout.onepage.login">
+            <action method="setTemplate"><template>masterpass/onepage/login.phtml</template></action>
+        </reference>       
+    </checkout_onepage_index>
+    <!-- standard checkout -->
+    <masterpass_index_checkout>
+        <reference name="head">
+            <action method="addItem" ifconfig="masterpass/config/enabled">
+                <type>skin_css</type>
+                <name>css/masterpass/masterpassclient.css</name>
+            </action> 
+        </reference>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action> 
+        </reference> 
+        <reference name="content">        
+            <block type="masterpass/checkout_checkout" name="masterpass-checkout" template="masterpass/onepage/checkout.phtml">
+                <block type="masterpass/checkout_checkout" name="masterpass-shipping-form" as="standshippingform" template="masterpass/onepage/shipping_form.phtml"/>
+                <block type="checkout/onepage_shipping_method_available" name="choose-shipping-method" as="mpshippingmethod" template="masterpass/precheckout/shipping_method.phtml"/>
+                   <block type="masterpass/checkout_review_details" name="masterpass.checkout.review.details" as="orderdetails" template="masterpass/review/details.phtml">
+                    <action method="addItemRender">
+                        <type>default</type>
+                        <block>checkout/cart_item_renderer</block>
+                        <template>checkout/onepage/review/item.phtml</template>
+                    </action>
+                    <action method="addItemRender">
+                        <type>grouped</type>
+                        <block>checkout/cart_item_renderer_grouped</block>
+                        <template>checkout/onepage/review/item.phtml</template>
+                    </action>
+                    <action method="addItemRender">
+                        <type>configurable</type>
+                        <block>checkout/cart_item_renderer_configurable</block>
+                        <template>checkout/onepage/review/item.phtml</template>
+                    </action>
+                    <block type="checkout/cart_totals" name="masterpass.checkout.review.details.totals" as="totals" template="checkout/onepage/review/totals.phtml"/>
+                </block>
+            </block>
+            
+        </reference>
+    </masterpass_index_checkout>
+    <masterpass_index_review>      
+        <block output="toHtml" type="masterpass/checkout_review_details" name="masterpass.checkout.review.details" as="details" template="masterpass/ajax/details.phtml">
+            <action method="addItemRender">
+                <type>default</type>
+                <block>checkout/cart_item_renderer</block>
+                <template>checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>grouped</type>
+                <block>checkout/cart_item_renderer_grouped</block>
+                <template>checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>configurable</type>
+                <block>checkout/cart_item_renderer_configurable</block>
+                <template>checkout/onepage/review/item.phtml</template>
+            </action>
+            <block type="checkout/cart_totals" name="masterpass.checkout.review.details.totals" as="totals" template="checkout/onepage/review/totals.phtml"/>
+        </block>
+    </masterpass_index_review>
+    <masterpass_index_saveshipping>      
+        <block output="toHtml" type="checkout/onepage_shipping_method_available" name="choose-shipping-method" template="masterpass/ajax/shipping_method.phtml"/>
+    </masterpass_index_saveshipping>
+    <!-- Ajax Request -->
+    <masterpass_masterpasspairing_saveshipping>      
+        <block output="toHtml" type="checkout/onepage_shipping_method_available" name="choose-shipping-method" template="masterpass/ajax/shipping_method.phtml"/>
+    </masterpass_masterpasspairing_saveshipping>
+    <masterpass_masterpasspairing_availableshipping>      
+        <block output="toHtml" type="checkout/onepage_shipping_method_available" name="choose-shipping-method" template="masterpass/ajax/shipping_method.phtml"/>
+    </masterpass_masterpasspairing_availableshipping>
+    <masterpass_masterpasspairing_saveshippingmethod>      
+        <block output="toHtml" type="checkout/onepage_shipping_method_available" name="choose-shipping-method" template="masterpass/ajax/shipping_method.phtml"/>
+    </masterpass_masterpasspairing_saveshippingmethod>
+    <masterpass_masterpasspairing_review>      
+        <block output="toHtml" type="masterpass/checkout_review_details" name="masterpass.checkout.review.details" as="details" template="masterpass/ajax/details.phtml">
+            <action method="addItemRender">
+                <type>default</type>
+                <block>checkout/cart_item_renderer</block>
+                <template>checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>grouped</type>
+                <block>checkout/cart_item_renderer_grouped</block>
+                <template>checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>configurable</type>
+                <block>checkout/cart_item_renderer_configurable</block>
+                <template>checkout/onepage/review/item.phtml</template>
+            </action>
+            <block type="checkout/cart_totals" name="masterpass.checkout.review.details.totals" as="totals" template="checkout/onepage/review/totals.phtml"/>
+        </block>
+    </masterpass_masterpasspairing_review>
+    <!-- end Ajax -->
+    
+    <customer_account_index translate="label">
+        <reference name="my.account.wrapper">
+            <block type="masterpass/customer_wrapper" name="masterpass.pairing"
+                   before="customer_account_dashboard" template="masterpass/customer/pair_after_register.phtml">
+            </block>
+        </reference>
+    </customer_account_index>
+    <masterpass_index_success>
+        <label>One Page Checkout Success</label>       
+        <reference name="head">
+            <action method="addItem" ifconfig="masterpass/config/enabled">
+                <type>skin_css</type>
+                <name>css/masterpass/masterpassclient.css</name>
+            </action> 
+        </reference>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="checkout/onepage_success" name="checkout.success" template="masterpass/onepage/success.phtml"/>
+        </reference>
+    </masterpass_index_success>
+</layout>

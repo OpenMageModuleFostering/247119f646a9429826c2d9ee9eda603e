@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<config>
+    <modules>
+        <MasterCard_Countriesmapping>
+            <version>0.1.0</version>
+        </MasterCard_Countriesmapping>
+    </modules>
+    <global>
+        <resources>
+            <mastercard_countriesmapping_setup>
+                <setup>
+                    <module>MasterCard_Countriesmapping</module>
+                    <class>Mage_Customer_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </mastercard_countriesmapping_setup>
+            <mastercard_countriesmapping_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </mastercard_countriesmapping_write>
+            <mastercard_countriesmapping_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </mastercard_countriesmapping_read>
+        </resources>
+    </global>
+
+</config>
